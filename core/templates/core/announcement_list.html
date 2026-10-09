@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+{% load core_tags %}
+
+{% block title %}فراخوان‌ها · پیک آپ لند{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">اطلاع‌رسانی</p>
+    <h1>فراخوان‌ها و اخبار</h1>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    {% for item in announcements %}
+      <a class="ann" href="{{ item.get_absolute_url }}">
+        <span class="ann-date">{{ item.published_at|jdate }}</span>
+        <span class="ann-body">
+          <h3>{{ item.title }}</h3>
+          {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
+        </span>
+        {% if item.deadline %}<span class="ann-deadline">مهلت: {{ item.deadline|jdate }}</span>{% endif %}
+      </a>
+    {% empty %}
+      <p class="muted">فعلاً فراخوانی منتشر نشده است.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

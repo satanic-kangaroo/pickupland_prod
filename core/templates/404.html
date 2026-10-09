@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block title %}صفحه پیدا نشد · پیک آپ لند{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">خطای ۴۰۴</p>
+    <h1>این صفحه پیدا نشد</h1>
+    <p class="lead">آدرس اشتباه است یا صفحه جابه‌جا شده است.</p>
+    <a class="btn" href="{% url 'home' %}">بازگشت به خانه</a>
+  </div>
+</section>
+{% endblock %}

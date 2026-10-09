@@ -1,0 +1,142 @@
+{% extends "core/base.html" %}
+{% load core_tags %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">مگا شبکه‌ی نوآوری · پردیس، تهران</p>
+      <h1>ایده‌ی شما باید از آزمایشگاه به بازار برسد. ما مسیر را کوتاه می‌کنیم.</h1>
+      <p class="lead">پیک آپ لند تیم‌های فناور را در هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم به منتور، آزمایشگاه، سرمایه و شبکه‌ی صنعت وصل می‌کند.</p>
+      <div class="actions">
+        <a class="btn" href="{% url 'contact' %}">درخواست عضویت</a>
+        <a class="btn btn-ghost" href="{% url 'services' %}">خدمات ما</a>
+      </div>
+    </div>
+
+    <aside class="spec" aria-label="حوزه‌های فعالیت">
+      <div class="spec-head">حوزه‌های فعالیت</div>
+      {% for field in fields %}
+        <div class="spec-row">
+          <span class="code">{{ field.code }}</span>
+          <span class="spec-title">{{ field.title }}</span>
+          {% icon field.icon %}
+        </div>
+      {% empty %}
+        <div class="spec-row muted">هنوز حوزه‌ای ثبت نشده است.</div>
+      {% endfor %}
+    </aside>
+  </div>
+</section>
+
+{% if stats %}
+<div class="figures">
+  <div class="container figures-row">
+    {% for stat in stats %}
+      <div class="figure">
+        <div class="fig-value">{{ stat.value }}</div>
+        <div class="fig-label">{{ stat.label }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<section id="fields">
+  <div class="container split">
+    <header class="section-head">
+      <p class="eyebrow">۰۱ — حوزه‌ها</p>
+      <h2>چهار حوزه، یک زیست‌بوم</h2>
+    </header>
+    <ol class="rows domains">
+      {% for field in fields %}
+        <li>
+          <span class="row-icon">{% icon field.icon %}</span>
+          <div>
+            <span class="code">{{ field.code }}</span>
+            <h3>{{ field.title }}</h3>
+          </div>
+          <p>{{ field.description }}</p>
+        </li>
+      {% empty %}
+        <li><p class="muted">هنوز حوزه‌ای ثبت نشده است.</p></li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section id="services" class="ruled">
+  <div class="container split">
+    <header class="section-head">
+      <p class="eyebrow">۰۲ — خدمات</p>
+      <h2>از منتورینگ تا تأمین مالی، در یک مسیر</h2>
+      <p class="more"><a href="{% url 'services' %}">همه‌ی خدمات ←</a></p>
+    </header>
+    <ol class="rows">
+      {% for service in services %}
+        <li>
+          <span class="row-num">{{ forloop.counter|fa_num }}</span>
+          <div>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.description }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{% if steps %}
+<section id="steps">
+  <div class="container">
+    <header class="section-head wide">
+      <p class="eyebrow">۰۳ — عضویت</p>
+      <h2>عضویت در چهار مرحله</h2>
+    </header>
+    <ol class="track">
+      {% for step in steps %}
+        <li>
+          <span class="step-num">{{ forloop.counter|fa_num }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+{% endif %}
+
+<section class="ruled">
+  <div class="container split">
+    <header class="section-head">
+      <p class="eyebrow">۰۴ — فراخوان‌ها</p>
+      <h2>فراخوان‌های باز و اخبار</h2>
+    </header>
+    <div>
+      {% for item in announcements %}
+        <a class="ann" href="{{ item.get_absolute_url }}">
+          <span class="ann-date">{{ item.published_at|jdate }}</span>
+          <span class="ann-body">
+            <h3>{{ item.title }}</h3>
+            {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
+          </span>
+          {% if item.deadline %}<span class="ann-deadline">مهلت: {{ item.deadline|jdate }}</span>{% endif %}
+        </a>
+      {% empty %}
+        <p class="muted">فعلاً فراخوانی منتشر نشده است.</p>
+      {% endfor %}
+      <p class="more"><a href="{% url 'announcements' %}">همه‌ی فراخوان‌ها ←</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-inner">
+    <div>
+      <h2>تیم شما آماده‌ی ورود به شبکه است؟</h2>
+      <p>فرم را پر کنید. تیم ارزیابی پیک آپ با شما تماس می‌گیرد.</p>
+    </div>
+    <a class="btn btn-inverse" href="{% url 'contact' %}">شروع عضویت</a>
+  </div>
+</section>
+{% endblock %}

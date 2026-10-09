@@ -1,0 +1,46 @@
+{% extends "core/base.html" %}
+{% load core_tags %}
+
+{% block title %}خدمات · پیک آپ لند{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">خدمات</p>
+    <h1>خدمات، مرحله به مرحله</h1>
+    <p class="lead">هر خدمت به یکی از مراحل مسیر از ایده تا بازار پاسخ می‌دهد.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container split">
+    <header class="section-head">
+      <p class="eyebrow">فهرست</p>
+      <h2>آنچه ارائه می‌دهیم</h2>
+    </header>
+    <ol class="rows">
+      {% for service in services %}
+        <li>
+          <span class="row-num">{{ forloop.counter|fa_num }}</span>
+          <div>
+            <h3>{% icon service.icon %} {{ service.title }}</h3>
+            <p>{{ service.description }}</p>
+          </div>
+        </li>
+      {% empty %}
+        <li><p class="muted">خدمتی ثبت نشده است.</p></li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-inner">
+    <div>
+      <h2>کدام خدمت به کار تیم شما می‌آید؟</h2>
+      <p>وضعیت تیم یا ایده‌ی خود را بنویسید تا راهنمایی شوید.</p>
+    </div>
+    <a class="btn btn-inverse" href="{% url 'contact' %}">درخواست مشاوره</a>
+  </div>
+</section>
+{% endblock %}

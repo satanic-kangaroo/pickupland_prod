@@ -1,0 +1,81 @@
+{% load static %}<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}پیک آپ لند · مگا شبکه‌ی نوآوری{% endblock %}</title>
+  <meta name="description" content="{% block description %}مگا شبکه‌ی نوآوری پیک آپ لند برای هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم{% endblock %}">
+  <link rel="canonical" href="{{ site_url }}{{ request.path }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="پیک آپ لند">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:title" content="{% block og_title %}پیک آپ لند{% endblock %}">
+  <meta name="theme-color" content="{{ theme_vars.bg }}">
+  <link rel="icon" href="{% static 'core/img/favicon.svg' %}" type="image/svg+xml">
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root {
+      {% for key, value in theme_vars.items %}--{{ key }}: {{ value }};
+      {% endfor %}
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
+  <script type="application/ld+json">{{ org_schema_json|safe }}</script>
+  {% block head_extra %}{% endblock %}
+</head>
+<body data-theme="{{ theme_name }}">
+  <a class="skip-link" href="#content">رفتن به محتوا</a>
+
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="{% url 'home' %}" aria-label="صفحه‌ی اصلی پیک آپ لند">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 1.5v3.5M15 1.5v3.5M9 19v3.5M15 19v3.5M1.5 9H5M1.5 15H5M19 9h3.5M19 15h3.5"/></svg>
+        <span>پیک آپ <b>لند</b></span>
+      </a>
+      <button class="menu-btn" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="باز کردن منو">
+        <span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="منوی اصلی">
+        <a class="{% if request.resolver_match.url_name == 'services' %}is-current{% endif %}" href="{% url 'services' %}">خدمات</a>
+        <a class="{% if request.resolver_match.url_name == 'about' %}is-current{% endif %}" href="{% url 'about' %}">درباره‌ی ما</a>
+        <a class="{% if 'announcement' in request.resolver_match.url_name %}is-current{% endif %}" href="{% url 'announcements' %}">فراخوان‌ها</a>
+        <a class="btn btn-small" href="{% url 'contact' %}">تماس و عضویت</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    {% if messages %}
+      <div class="container">
+        {% for message in messages %}
+          <p class="flash flash-{{ message.tags }}" role="status">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <div>
+        <div class="brand">پیک آپ <b>لند</b></div>
+        <p class="muted">مگا شبکه‌ی نوآوری برای هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم.</p>
+      </div>
+      <nav class="foot-links" aria-label="پیوندهای پاورقی">
+        <a href="{% url 'services' %}">خدمات</a>
+        <a href="{% url 'about' %}">درباره‌ی ما</a>
+        <a href="{% url 'announcements' %}">فراخوان‌ها</a>
+        <a href="{% url 'contact' %}">تماس با ما</a>
+      </nav>
+      <address class="foot-contact">
+        <div>{{ site.address }}</div>
+        <div dir="ltr">{{ site.email }}</div>
+        <div>ساعت کاری: {{ site.hours }}</div>
+      </address>
+    </div>
+    <div class="container copyright">© {% now "Y" %} پیک آپ لند</div>
+  </footer>
+
+  <script src="{% static 'core/js/main.js' %}" defer></script>
+</body>
+</html>

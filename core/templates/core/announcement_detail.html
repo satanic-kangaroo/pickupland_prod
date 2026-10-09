@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ item.title }} · پیک آپ لند{% endblock %}
+{% block description %}{{ item.summary|default:"فراخوان پیک آپ لند" }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container narrow">
+    <nav class="crumbs" aria-label="مسیر"><a href="{% url 'home' %}">خانه</a> / <a href="{% url 'announcements' %}">فراخوان‌ها</a></nav>
+    <p class="eyebrow">{{ item.published_at|jdate }}{% if item.deadline %} · مهلت: {{ item.deadline|jdate }}{% endif %}</p>
+    <h1>{{ item.title }}</h1>
+    {% if item.summary %}<p class="lead">{{ item.summary }}</p>{% endif %}
+  </div>
+</section>
+
+<section>
+  <div class="container narrow">
+    <div class="prose">{{ item.body|linebreaks }}</div>
+    <p class="more"><a href="{% url 'contact' %}">برای شرکت در این فراخوان با ما تماس بگیرید ←</a></p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+{% load core_tags %}
+
+{% block title %}درباره‌ی ما · پیک آپ لند{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">درباره‌ی ما</p>
+    <h1>نوآوری کلید رشد اقتصادی و رفاه اجتماعی است. ما شبکه‌ی آن را می‌سازیم.</h1>
+  </div>
+</section>
+
+<section>
+  <div class="container split">
+    <header class="section-head">
+      <p class="eyebrow">مأموریت</p>
+      <h2>پیک آپ لند چیست؟</h2>
+    </header>
+    <div class="prose">
+      <p>پیک آپ به‌عنوان یک مگا شبکه در حوزه‌ی نوآوری، وظایف متعددی را برای توسعه‌ی زیست‌بوم هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم بر عهده دارد.</p>
+      <p>شبکه‌های فناور از افراد، سازمان‌ها و منابع مختلف در حوزه‌ی علم و فناوری تشکیل شده‌اند. پیک آپ این شبکه‌ها را به هم وصل می‌کند تا تیم‌ها از آزمون‌وخطاهای پرهزینه پرهیز کنند و سریع‌تر به بلوغ تجاری برسند.</p>
+      <p class="value-line">ارزش افزوده‌ی ما برای تیم‌ها: شبکه‌ای قابل اعتماد و رسیدن به هدف با کمترین انحراف.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ruled">
+  <div class="container split">
+    <header class="section-head">
+      <p class="eyebrow">برنامه‌های راهبردی</p>
+      <h2>دو محور اصلی فعالیت</h2>
+    </header>
+    <ol class="rows">
+      <li>
+        <span class="row-num">{{ 1|fa_num }}</span>
+        <div>
+          <h3>توسعه‌ی فناوری‌های کلیدی</h3>
+          <p>تحقیق و توسعه‌ی فناوری‌های پیشرفته در حوزه‌های هوش مصنوعی، کوانتوم و الکترونیک.</p>
+        </div>
+      </li>
+      <li>
+        <span class="row-num">{{ 2|fa_num }}</span>
+        <div>
+          <h3>توسعه‌ی نیروی کار ماهر</h3>
+          <p>آموزش و تربیت نیروی متخصص برای پاسخ به نیازهای واقعی صنعت.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="container split">
+    <header class="section-head">
+      <p class="eyebrow">حوزه‌ها</p>
+      <h2>در چه حوزه‌هایی فعالیت داریم؟</h2>
+    </header>
+    <ol class="rows domains">
+      {% for field in fields %}
+        <li>
+          <span class="row-icon">{% icon field.icon %}</span>
+          <div><span class="code">{{ field.code }}</span><h3>{{ field.title }}</h3></div>
+          <p>{{ field.description }}</p>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+{% endblock %}
