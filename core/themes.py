@@ -5,36 +5,40 @@
 from django.core.exceptions import ImproperlyConfigured
 
 THEMES = {
-    # کاغذ نقشه‌ی مهندسی: زمینه‌ی روشن، جوهر تیره، آبی نقشه‌ای
-    "blueprint": {
-        "name": "نقشه‌ی مهندسی",
+    # اتاق تمیز: سفیدِ خنثی، آبیِ عمیق، مسی
+    "clean_room": {
+        "name": "اتاق تمیز",
         "colors": {
-            "bg": "#f3f1ea",
-            "surface": "#faf9f4",
-            "surface-2": "#ebe8de",
-            "text": "#14181f",
-            "muted": "#5b6371",
-            "border": "#d3cdbd",
-            "grid": "rgba(20, 24, 31, 0.06)",
-            "primary": "#1f3a8a",
-            "primary-contrast": "#faf9f4",
-            "accent": "#b4530a",
+            "bg": "#eef1ec",
+            "surface": "#fbfcfa",
+            "surface-2": "#e2e8e1",
+            "text": "#0b1a20",
+            "muted": "#52636b",
+            "border": "#c4cec8",
+            "grid": "rgba(11, 26, 32, 0.07)",
+            "primary": "#0a4a63",
+            "primary-contrast": "#fbfcfa",
+            "accent": "#d9662b",
+            "ink": "#0b1a20",
+            "ink-contrast": "#eef1ec",
         },
     },
-    # اتاق آزمایشگاه شبانه
+    # کارگاه شبانه: نور فیروزه‌ای روی زمینه‌ی تیره
     "night_fab": {
-        "name": "آزمایشگاه شبانه",
+        "name": "کارگاه شبانه",
         "colors": {
-            "bg": "#0c0f14",
-            "surface": "#11161d",
-            "surface-2": "#18202a",
-            "text": "#e8ecf1",
-            "muted": "#8b95a3",
-            "border": "#263140",
-            "grid": "rgba(232, 236, 241, 0.05)",
-            "primary": "#7dd3fc",
-            "primary-contrast": "#06121a",
-            "accent": "#e5b25d",
+            "bg": "#061013",
+            "surface": "#0b181d",
+            "surface-2": "#12242b",
+            "text": "#e8f5f2",
+            "muted": "#8ea7a5",
+            "border": "#1d3a41",
+            "grid": "rgba(94, 224, 207, 0.06)",
+            "primary": "#5ee0cf",
+            "primary-contrast": "#04131a",
+            "accent": "#ff9a4d",
+            "ink": "#e8f5f2",
+            "ink-contrast": "#061013",
         },
     },
 }

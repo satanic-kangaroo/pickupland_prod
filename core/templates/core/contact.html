@@ -1,20 +1,21 @@
 {% extends "core/base.html" %}
 
 {% block title %}تماس و عضویت · پیک آپ لند{% endblock %}
+{% block description %}برای عضویت در حلقه، ثبت‌نام دوره‌های آکادمی، همکاری یا خدمات نوآوری، با تیم پیک آپ لند تماس بگیرید.{% endblock %}
 
 {% block content %}
 <section class="page-head">
   <div class="container">
     <p class="eyebrow">تماس و عضویت</p>
-    <h1>پیام یا درخواست عضویت خود را بفرستید</h1>
+    <h1>پیام خود را بفرستید؛ به موضوع درست می‌رسد</h1>
   </div>
 </section>
 
-<section>
+<section class="block">
   <div class="container split">
-    <header class="section-head">
-      <p class="eyebrow">فرم</p>
-      <h2>با تیم پیک آپ در ارتباط باشید</h2>
+    <header class="block-head sticky">
+      <p class="eyebrow">اطلاعات تماس</p>
+      <h2>دفتر پیک آپ</h2>
       <dl class="details">
         <dt>نشانی</dt><dd>{{ site.address }}</dd>
         <dt>ایمیل</dt><dd dir="ltr"><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd>
@@ -25,17 +26,29 @@
 
     <form class="form" method="post" novalidate>
       {% csrf_token %}
+
+      {% if form.errors %}
+        <div class="form-summary" role="alert">
+          <p>لطفاً خطاهای مشخص‌شده را برطرف کنید.</p>
+        </div>
+      {% endif %}
+
       {% for field in form %}
         {% if field.name == "website" %}
           <div class="hp" aria-hidden="true">{{ field }}</div>
         {% else %}
           <div class="field">
-            <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="req" aria-hidden="true">*</span>{% endif %}</label>
+            <label for="{{ field.id_for_label }}">
+              {{ field.label }}{% if field.field.required %} <span class="req" aria-hidden="true">*</span><span class="sr-only">(الزامی)</span>{% endif %}
+            </label>
             {{ field }}
-            {% for error in field.errors %}<small class="error">{{ error }}</small>{% endfor %}
+            {% for error in field.errors %}
+              <small class="error" id="error-{{ field.name }}">{{ error }}</small>
+            {% endfor %}
           </div>
         {% endif %}
       {% endfor %}
+
       <button class="btn" type="submit">ارسال پیام</button>
     </form>
   </div>

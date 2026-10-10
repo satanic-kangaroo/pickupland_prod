@@ -1,0 +1,92 @@
+{% extends "core/base.html" %}
+{% load core_tags humanize %}
+
+{% block title %}آکادمی · پیک آپ لند{% endblock %}
+{% block description %}آکادمی پیک آپ با دوره‌های FABSTART و FABINSIGHT؛ ورود به دنیای Fab و ساخت ادوات نیمه‌هادی با حمایت برنامه‌ی ملی میکروالکترونیک.{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">آکادمی پیک آپ</p>
+    <h1>از کلین‌روم تا ویفر، زیر نظر برنامه‌ی ملی میکروالکترونیک</h1>
+    <p class="lead">دوره‌های آکادمی در دو سطح برگزار می‌شوند: FABSTART دریچه‌ی ورود به دنیای Fab است و FABINSIGHT با بینشی عمیق، پروسه‌ها و تجهیزات ساخت ادوات نیمه‌هادی را بررسی می‌کند.</p>
+  </div>
+</section>
+
+{% for course in courses %}
+<section class="block{% if forloop.counter0 %} block-alt{% endif %}">
+  <div class="container">
+    <header class="course-head">
+      <div>
+        <p class="eyebrow">{{ course.level_label }}</p>
+        <h2><span class="code-big">{{ course.code }}</span> {{ course.title }}</h2>
+        <p class="lead-p">{{ course.summary }}</p>
+      </div>
+      {% if course.duration %}<div class="duration"><span>مدت دوره</span><strong>{{ course.duration }}</strong></div>{% endif %}
+    </header>
+
+    {% if course.pillars.all %}
+      <ol class="pillars">
+        {% for pillar in course.pillars.all %}
+          <li>
+            <span class="pillar-num">{{ forloop.counter|fa_num }}</span>
+            <h3>{{ pillar.title }}</h3>
+            <p>{{ pillar.description }}</p>
+          </li>
+        {% endfor %}
+      </ol>
+    {% endif %}
+
+    <div class="course-meta">
+      {% if course.schedule %}<div><span>زمان برگزاری</span><strong>{{ course.schedule }}</strong></div>{% endif %}
+      {% if course.location %}<div><span>محل برگزاری</span><strong>{{ course.location }}</strong></div>{% endif %}
+    </div>
+
+    {% if course.has_price %}
+      <div class="price-block">
+        <div class="price-head">
+          <h3>هزینه‌ی دوره و یارانه</h3>
+          <p class="muted">هزینه‌ی واقعی دوره {{ course.full_price|toman_millions }} میلیون تومان است؛ با یارانه‌ی برنامه‌ی ملی میکروالکترونیک، هزینه برای مخاطبان زیر کاهش می‌یابد.</p>
+        </div>
+        <div class="bars" role="table" aria-label="مقایسه‌ی هزینه‌ها">
+          <div class="bar-row" role="row">
+            <span class="bar-label" role="rowheader">هزینه‌ی واقعی</span>
+            <span class="bar"><span class="bar-fill full" style="width: 100%"></span></span>
+            <strong role="cell">{{ course.full_price|toman_millions }} میلیون تومان</strong>
+          </div>
+          <div class="bar-row" role="row">
+            <span class="bar-label" role="rowheader">سایر شرکت‌کنندگان</span>
+            <span class="bar"><span class="bar-fill" style="width: {{ course.other_percent }}%"></span></span>
+            <strong role="cell">{{ course.other_price|toman_millions }} میلیون تومان</strong>
+          </div>
+          <div class="bar-row" role="row">
+            <span class="bar-label" role="rowheader">دانشجویان کارشناسی ارشد و دکتری</span>
+            <span class="bar"><span class="bar-fill accent" style="width: {{ course.student_percent }}%"></span></span>
+            <strong role="cell">{{ course.student_price|toman_millions }} میلیون تومان</strong>
+          </div>
+        </div>
+        {% if course.subsidy_note %}<p class="note">{{ course.subsidy_note }}</p>{% endif %}
+      </div>
+    {% else %}
+      <p class="note">هزینه‌ی این دوره به‌زودی اعلام می‌شود.</p>
+    {% endif %}
+
+    {% if course.extra_note %}<p class="note">{{ course.extra_note }}</p>{% endif %}
+
+    <p class="more"><a href="{% url 'contact' %}?topic=academy">ثبت‌نام و اطلاعات بیشتر ←</a></p>
+  </div>
+</section>
+{% empty %}
+  <section class="block"><div class="container"><p class="muted">فعلاً دوره‌ای برای ثبت‌نام باز نیست.</p></div></section>
+{% endfor %}
+
+<section class="cta">
+  <div class="container cta-inner">
+    <div>
+      <h2>برای ثبت‌نام و پرسش درباره‌ی دوره‌ها</h2>
+      <p>فرم تماس را پر کنید؛ موضوع «دوره‌های آکادمی» از پیش انتخاب شده است.</p>
+    </div>
+    <a class="btn btn-inverse" href="{% url 'contact' %}?topic=academy">ارسال پیام</a>
+  </div>
+</section>
+{% endblock %}

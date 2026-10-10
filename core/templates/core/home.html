@@ -1,36 +1,37 @@
 {% extends "core/base.html" %}
-{% load core_tags %}
+{% load core_tags humanize %}
 
 {% block content %}
 <section class="hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">مگا شبکه‌ی نوآوری · پردیس، تهران</p>
-      <h1>ایده‌ی شما باید از آزمایشگاه به بازار برسد. ما مسیر را کوتاه می‌کنیم.</h1>
-      <p class="lead">پیک آپ لند تیم‌های فناور را در هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم به منتور، آزمایشگاه، سرمایه و شبکه‌ی صنعت وصل می‌کند.</p>
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>مگا شبکه‌ی توسعه‌ی نوآوری · پردیس، تهران</p>
+      <h1>از ایده تا <span class="hl">تراشه</span> و بازار؛ <span class="nowrap">یک مسیر، یک شبکه.</span></h1>
+      <p class="lead">پیک آپ لند تیم‌های فناور را در هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم به منتور، آزمایشگاه، سرمایه‌گذار و شبکه‌ی صنعت وصل می‌کند تا با کمترین انحراف به نتیجه برسند.</p>
       <div class="actions">
-        <a class="btn" href="{% url 'contact' %}">درخواست عضویت</a>
-        <a class="btn btn-ghost" href="{% url 'services' %}">خدمات ما</a>
+        <a class="btn" href="{% url 'membership' %}">عضویت در حلقه</a>
+        <a class="btn btn-ghost" href="{% url 'academy' %}">دوره‌های آکادمی</a>
       </div>
     </div>
 
-    <aside class="spec" aria-label="حوزه‌های فعالیت">
-      <div class="spec-head">حوزه‌های فعالیت</div>
-      {% for field in fields %}
-        <div class="spec-row">
-          <span class="code">{{ field.code }}</span>
-          <span class="spec-title">{{ field.title }}</span>
-          {% icon field.icon %}
-        </div>
-      {% empty %}
-        <div class="spec-row muted">هنوز حوزه‌ای ثبت نشده است.</div>
+    <figure class="wafer-wrap" aria-hidden="false">
+      {% include "core/includes/wafer.svg" %}
+      <span class="scan" aria-hidden="true"></span>
+      <figcaption class="wafer-caption">نقشه‌ی ویفر · تراشه‌های فعال هایلایت شده</figcaption>
+    </figure>
+  </div>
+
+  <div class="ticker" aria-label="حوزه‌های فعالیت">
+    <div class="ticker-track" aria-hidden="true">
+      {% for i in "12" %}
+        {% for field in fields %}<span>{{ field.title }}</span><span class="sep">◆</span>{% endfor %}
       {% endfor %}
-    </aside>
+    </div>
   </div>
 </section>
 
 {% if stats %}
-<div class="figures">
+<section class="figures" aria-label="اعداد کلیدی">
   <div class="container figures-row">
     {% for stat in stats %}
       <div class="figure">
@@ -39,87 +40,138 @@
       </div>
     {% endfor %}
   </div>
-</div>
+</section>
 {% endif %}
 
-<section id="fields">
-  <div class="container split">
-    <header class="section-head">
+<section id="fields" class="block">
+  <div class="container">
+    <header class="block-head">
       <p class="eyebrow">۰۱ — حوزه‌ها</p>
       <h2>چهار حوزه، یک زیست‌بوم</h2>
     </header>
-    <ol class="rows domains">
+    <div class="tiles">
       {% for field in fields %}
-        <li>
-          <span class="row-icon">{% icon field.icon %}</span>
-          <div>
-            <span class="code">{{ field.code }}</span>
-            <h3>{{ field.title }}</h3>
+        <article class="tile">
+          <div class="tile-top">
+            <span class="tile-code">{{ field.code }}</span>
+            <span class="tile-icon">{% icon field.icon %}</span>
           </div>
+          <h3>{{ field.title }}</h3>
           <p>{{ field.description }}</p>
-        </li>
+        </article>
       {% empty %}
-        <li><p class="muted">هنوز حوزه‌ای ثبت نشده است.</p></li>
+        <p class="muted">هنوز حوزه‌ای ثبت نشده است.</p>
       {% endfor %}
-    </ol>
+    </div>
   </div>
 </section>
 
-<section id="services" class="ruled">
+<section id="services" class="block block-alt">
   <div class="container split">
-    <header class="section-head">
+    <header class="block-head sticky">
       <p class="eyebrow">۰۲ — خدمات</p>
-      <h2>از منتورینگ تا تأمین مالی، در یک مسیر</h2>
+      <h2>از جرقه‌ی ایده تا رسیدن به بازار</h2>
+      <p class="muted">هر خدمت یکی از مراحل مسیر را پوشش می‌دهد. روی هر مورد کلیک کنید تا جزئیات آن را ببینید.</p>
       <p class="more"><a href="{% url 'services' %}">همه‌ی خدمات ←</a></p>
     </header>
-    <ol class="rows">
+    <div class="accordion">
       {% for service in services %}
-        <li>
-          <span class="row-num">{{ forloop.counter|fa_num }}</span>
-          <div>
-            <h3>{{ service.title }}</h3>
+        <details{% if forloop.first %} open{% endif %}>
+          <summary>
+            <span class="acc-num">{{ forloop.counter|fa_num }}</span>
+            <span class="acc-title">{{ service.title }}</span>
+            <span class="acc-icon" aria-hidden="true">{% icon service.icon %}</span>
+          </summary>
+          <div class="acc-body">
             <p>{{ service.description }}</p>
+            <ul class="check">
+              {% for point in service.points_list %}<li>{{ point }}</li>{% endfor %}
+            </ul>
           </div>
-        </li>
+        </details>
       {% endfor %}
-    </ol>
+    </div>
   </div>
 </section>
 
-{% if steps %}
-<section id="steps">
+{% if course %}
+<section id="academy" class="block">
   <div class="container">
-    <header class="section-head wide">
-      <p class="eyebrow">۰۳ — عضویت</p>
-      <h2>عضویت در چهار مرحله</h2>
+    <header class="block-head">
+      <p class="eyebrow">۰۳ — آکادمی</p>
+      <h2>دوره‌ی {{ course.code }}: ورود به دنیای Fab</h2>
+      <p class="muted">{{ course.summary }}</p>
     </header>
-    <ol class="track">
-      {% for step in steps %}
+
+    <ol class="pillars">
+      {% for pillar in course.pillars.all %}
         <li>
-          <span class="step-num">{{ forloop.counter|fa_num }}</span>
-          <h3>{{ step.title }}</h3>
-          <p>{{ step.description }}</p>
+          <span class="pillar-num">{{ forloop.counter|fa_num }}</span>
+          <h3>{{ pillar.title }}</h3>
+          <p>{{ pillar.description }}</p>
         </li>
       {% endfor %}
     </ol>
+
+    <div class="course-meta">
+      {% if course.schedule %}<div><span>زمان</span><strong>{{ course.schedule }}</strong></div>{% endif %}
+      {% if course.location %}<div><span>محل</span><strong>{{ course.location }}</strong></div>{% endif %}
+    </div>
+    <p class="more"><a href="{% url 'academy' %}">جزئیات هزینه و ثبت‌نام ←</a></p>
   </div>
 </section>
 {% endif %}
 
-<section class="ruled">
+<section id="membership" class="block block-alt">
   <div class="container split">
-    <header class="section-head">
-      <p class="eyebrow">۰۴ — فراخوان‌ها</p>
-      <h2>فراخوان‌های باز و اخبار</h2>
+    <header class="block-head sticky">
+      <p class="eyebrow">۰۴ — عضویت</p>
+      <h2>حلقه‌ی مگا شبکه، از ثبت‌نام تا ورود</h2>
+      <p class="muted">ثبت‌نام اولیه به معنای ورود به حلقه نیست؛ تیم ارزیابی پیک آپ مسیر را با شما طی می‌کند.</p>
+      <p class="more"><a href="{% url 'membership' %}">شرایط عضویت ←</a></p>
+    </header>
+    <ol class="steps">
+      {% for step in steps %}
+        <li>
+          <span class="step-num">{{ forloop.counter|fa_num }}</span>
+          <div>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.description }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section id="hiring" class="block">
+  <div class="container">
+    <div class="callout">
+      <div>
+        <p class="eyebrow">۰۵ — همکاری</p>
+        <h2>طراح مدار مجتمع می‌خواهیم</h2>
+        <p class="muted">برای تیم تحقیق و توسعه‌ی خود در حوزه‌ی آنالوگ، دیجیتال و RF.
+          {% if open_jobs %}{{ open_jobs|fa_num }} موقعیت باز است.{% endif %}</p>
+      </div>
+      <a class="btn" href="{% url 'hiring' %}">مشاهده‌ی موقعیت‌ها</a>
+    </div>
+  </div>
+</section>
+
+<section id="news" class="block">
+  <div class="container split">
+    <header class="block-head sticky">
+      <p class="eyebrow">۰۶ — فراخوان‌ها</p>
+      <h2>آخرین فراخوان‌ها و اخبار</h2>
     </header>
     <div>
       {% for item in announcements %}
         <a class="ann" href="{{ item.get_absolute_url }}">
-          <span class="ann-date">{{ item.published_at|jdate }}</span>
-          <span class="ann-body">
+          <time class="ann-date" datetime="{{ item.published_at|date:'c' }}">{{ item.published_at|jdate }}</time>
+          <div class="ann-body">
             <h3>{{ item.title }}</h3>
             {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
-          </span>
+          </div>
           {% if item.deadline %}<span class="ann-deadline">مهلت: {{ item.deadline|jdate }}</span>{% endif %}
         </a>
       {% empty %}
@@ -134,9 +186,9 @@
   <div class="container cta-inner">
     <div>
       <h2>تیم شما آماده‌ی ورود به شبکه است؟</h2>
-      <p>فرم را پر کنید. تیم ارزیابی پیک آپ با شما تماس می‌گیرد.</p>
+      <p>فرم را پر کنید؛ موضوع و مرحله‌ی سرمایه‌گذاری‌تان را هم مشخص کنید تا پیام به تیم مناسب برسد.</p>
     </div>
-    <a class="btn btn-inverse" href="{% url 'contact' %}">شروع عضویت</a>
+    <a class="btn btn-inverse" href="{% url 'contact' %}?topic=membership">شروع عضویت</a>
   </div>
 </section>
 {% endblock %}

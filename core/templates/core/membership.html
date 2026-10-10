@@ -1,0 +1,92 @@
+{% extends "core/base.html" %}
+{% load core_tags %}
+
+{% block title %}عضویت در حلقه · پیک آپ لند{% endblock %}
+{% block description %}شرایط و مراحل عضویت در حلقه‌ی مگا شبکه‌ی پیک آپ؛ ثبت‌نام، ارزیابی، سطح‌بندی و ورود به حلقه.{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">عضویت در مگا شبکه</p>
+    <h1>حلقه‌ای از تیم‌های فناور، ارزیابی‌شده و قابل اعتماد</h1>
+    <p class="lead">ما فقط با تیم‌هایی همکاری می‌کنیم که از نظر صلاحیت و سابقه‌ی کاری ارزیابی شده‌اند. این یعنی شما با متخصصانی کار می‌کنید که راه‌حل‌های باکیفیت ارائه می‌دهند.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="container split">
+    <header class="block-head sticky">
+      <p class="eyebrow">ساختار حلقه</p>
+      <h2>از بیرون به درون حلقه</h2>
+      <p class="muted">هر لایه نمایانگر یک مرحله است؛ هرچه به مرکز نزدیک‌تر شوید، عمیق‌تر در شبکه مشارکت دارید.</p>
+    </header>
+    <div class="rings" aria-hidden="true">
+      <span class="ring r1"><em>ثبت‌نام</em></span>
+      <span class="ring r2"><em>ارزیابی</em></span>
+      <span class="ring r3"><em>سطح‌بندی</em></span>
+      <span class="ring core"><em>حلقه</em></span>
+    </div>
+  </div>
+</section>
+
+<section class="block block-alt">
+  <div class="container">
+    <header class="block-head wide">
+      <p class="eyebrow">مراحل</p>
+      <h2>چهار مرحله تا ورود به حلقه</h2>
+    </header>
+    <ol class="track">
+      {% for step in steps %}
+        <li>
+          <span class="step-num">{{ forloop.counter|fa_num }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="block">
+  <div class="container split">
+    <header class="block-head sticky">
+      <p class="eyebrow">چه کسانی می‌توانند عضو شوند؟</p>
+      <h2>پنج دسته‌ی همکار</h2>
+    </header>
+    <ol class="rows">
+      {% for name, desc in member_types %}
+        <li>
+          <span class="row-num">{{ forloop.counter|fa_num }}</span>
+          <div><h3>{{ name }}</h3><p>{{ desc }}</p></div>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="block block-alt">
+  <div class="container split">
+    <header class="block-head sticky">
+      <p class="eyebrow">تیم‌های فناور</p>
+      <h2>در چه حوزه‌هایی همکاری می‌کنیم؟</h2>
+    </header>
+    <div>
+      <p class="lead-p">با تیم‌های فناور در حوزه‌های مختلف از جمله:</p>
+      <ul class="chips">
+        {% for item in team_fields %}<li>{{ item }}</li>{% endfor %}
+      </ul>
+      <p class="muted">این فهرست نمونه است؛ حوزه‌ی فعالیت شما در صورت تناسب با اهداف شبکه، بررسی می‌شود.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-inner">
+    <div>
+      <h2>ثبت‌نام اولیه را شروع کنید</h2>
+      <p>ثبت‌نام به معنای ورود قطعی به حلقه نیست؛ پس از ارزیابی، وضعیت شما مشخص می‌شود.</p>
+    </div>
+    <a class="btn btn-inverse" href="{% url 'contact' %}?topic=membership">ثبت‌نام اولیه</a>
+  </div>
+</section>
+{% endblock %}

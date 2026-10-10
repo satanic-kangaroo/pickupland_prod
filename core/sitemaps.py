@@ -1,19 +1,21 @@
 from django.contrib.sitemaps import Sitemap
+from django.urls import reverse
 
 from .models import Announcement
 
 
 class StaticSitemap(Sitemap):
     changefreq = "monthly"
-    priority = 0.6
     protocol = "https"
 
     def items(self):
-        return ["home", "about", "services", "announcements", "contact"]
+        return ["home", "about", "services", "academy", "membership", "hiring", "announcements", "contact"]
 
     def location(self, item):
-        from django.urls import reverse
         return reverse(item)
+
+    def priority(self, item):
+        return 1.0 if item == "home" else 0.7
 
 
 class AnnouncementSitemap(Sitemap):

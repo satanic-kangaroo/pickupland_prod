@@ -11,17 +11,19 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = ContactMessage
-        fields = ["name", "email", "phone", "message"]
+        fields = ["name", "email", "phone", "topic", "funding_stage", "message"]
         labels = {
             "name": "نام و نام خانوادگی",
             "email": "ایمیل",
             "phone": "تلفن (اختیاری)",
-            "message": "پیام یا درخواست عضویت",
+            "topic": "موضوع پیام",
+            "funding_stage": "مرحله‌ی سرمایه‌گذاری (اختیاری)",
+            "message": "شرح کوتاه تیم، ایده یا نیاز",
         }
         widgets = {
             "name": forms.TextInput(attrs={"autocomplete": "name"}),
-            "email": forms.EmailInput(attrs={"dir": "ltr", "autocomplete": "email"}),
-            "phone": forms.TextInput(attrs={"dir": "ltr", "autocomplete": "tel"}),
+            "email": forms.EmailInput(attrs={"dir": "ltr", "autocomplete": "email", "inputmode": "email"}),
+            "phone": forms.TextInput(attrs={"dir": "ltr", "autocomplete": "tel", "inputmode": "tel"}),
             "message": forms.Textarea(attrs={"rows": 6}),
         }
 

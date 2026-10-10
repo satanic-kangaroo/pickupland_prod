@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import Announcement, ContactMessage, ProcessStep, Service, Stat, TechField
+from .models import (Announcement, ContactMessage, Course, CoursePillar, JobOpening,
+                     ProcessStep, Service, Stat, TechField)
+
+
+class CoursePillarInline(admin.TabularInline):
+    model = CoursePillar
+    extra = 0
 
 
 @admin.register(TechField)
@@ -13,6 +19,19 @@ class TechFieldAdmin(admin.ModelAdmin):
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ("title", "icon", "order", "is_active")
     list_editable = ("order", "is_active")
+
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ("code", "title", "schedule", "is_active", "order")
+    list_editable = ("is_active", "order")
+    inlines = [CoursePillarInline]
+
+
+@admin.register(JobOpening)
+class JobOpeningAdmin(admin.ModelAdmin):
+    list_display = ("title", "track", "is_open", "order")
+    list_editable = ("is_open", "order")
 
 
 @admin.register(ProcessStep)
@@ -37,8 +56,8 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "phone", "created_at", "is_handled")
+    list_display = ("name", "topic", "funding_stage", "email", "created_at", "is_handled")
     list_editable = ("is_handled",)
-    list_filter = ("is_handled",)
+    list_filter = ("topic", "is_handled")
     search_fields = ("name", "email", "message")
-    readonly_fields = ("name", "email", "phone", "message", "created_at")
+    readonly_fields = ("name", "email", "phone", "topic", "funding_stage", "message", "created_at")

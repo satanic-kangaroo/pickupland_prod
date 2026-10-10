@@ -2,35 +2,36 @@
 {% load core_tags %}
 
 {% block title %}خدمات · پیک آپ لند{% endblock %}
+{% block description %}خدمات توسعه‌ی نوآوری پیک آپ: حمایت از ایده و سرمایه‌گذاری، توسعه‌ی نوآوری صنعتی، توسعه‌ی بازار، آموزش و شبکه‌سازی.{% endblock %}
 
 {% block content %}
 <section class="page-head">
   <div class="container">
     <p class="eyebrow">خدمات</p>
     <h1>خدمات، مرحله به مرحله</h1>
-    <p class="lead">هر خدمت به یکی از مراحل مسیر از ایده تا بازار پاسخ می‌دهد.</p>
+    <p class="lead">هر خدمت یکی از مراحل مسیر توسعه‌ی نوآوری را پوشش می‌دهد؛ از ایده‌ی اولیه تا ورود به بازار.</p>
   </div>
 </section>
 
-<section>
-  <div class="container split">
-    <header class="section-head">
-      <p class="eyebrow">فهرست</p>
-      <h2>آنچه ارائه می‌دهیم</h2>
-    </header>
-    <ol class="rows">
+<section class="block">
+  <div class="container">
+    <div class="service-grid">
       {% for service in services %}
-        <li>
-          <span class="row-num">{{ forloop.counter|fa_num }}</span>
-          <div>
-            <h3>{% icon service.icon %} {{ service.title }}</h3>
-            <p>{{ service.description }}</p>
+        <article class="service-card">
+          <div class="service-head">
+            <span class="service-num">{{ forloop.counter|fa_num }}</span>
+            <span class="service-icon">{% icon service.icon %}</span>
           </div>
-        </li>
+          <h2>{{ service.title }}</h2>
+          <p class="muted">{{ service.description }}</p>
+          <ul class="check">
+            {% for point in service.points_list %}<li>{{ point }}</li>{% endfor %}
+          </ul>
+        </article>
       {% empty %}
-        <li><p class="muted">خدمتی ثبت نشده است.</p></li>
+        <p class="muted">خدمتی ثبت نشده است.</p>
       {% endfor %}
-    </ol>
+    </div>
   </div>
 </section>
 
@@ -40,7 +41,7 @@
       <h2>کدام خدمت به کار تیم شما می‌آید؟</h2>
       <p>وضعیت تیم یا ایده‌ی خود را بنویسید تا راهنمایی شوید.</p>
     </div>
-    <a class="btn btn-inverse" href="{% url 'contact' %}">درخواست مشاوره</a>
+    <a class="btn btn-inverse" href="{% url 'contact' %}?topic=services">درخواست مشاوره</a>
   </div>
 </section>
 {% endblock %}

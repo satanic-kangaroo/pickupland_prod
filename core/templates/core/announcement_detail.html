@@ -1,22 +1,37 @@
 {% extends "core/base.html" %}
 
 {% block title %}{{ item.title }} · پیک آپ لند{% endblock %}
-{% block description %}{{ item.summary|default:"فراخوان پیک آپ لند" }}{% endblock %}
+{% block og_title %}{{ item.title }}{% endblock %}
+{% block description %}{{ item.summary|default:"فراخوان مگا شبکه‌ی پیک آپ لند" }}{% endblock %}
+{% block og_description %}{{ item.summary|default:"فراخوان مگا شبکه‌ی پیک آپ لند" }}{% endblock %}
+
+{% block head_extra %}
+  <script type="application/ld+json">{{ article_jsonld|safe }}</script>
+{% endblock %}
 
 {% block content %}
-<section class="page-head">
-  <div class="container narrow">
-    <nav class="crumbs" aria-label="مسیر"><a href="{% url 'home' %}">خانه</a> / <a href="{% url 'announcements' %}">فراخوان‌ها</a></nav>
-    <p class="eyebrow">{{ item.published_at|jdate }}{% if item.deadline %} · مهلت: {{ item.deadline|jdate }}{% endif %}</p>
-    <h1>{{ item.title }}</h1>
-    {% if item.summary %}<p class="lead">{{ item.summary }}</p>{% endif %}
-  </div>
-</section>
+<article>
+  <header class="page-head">
+    <div class="container narrow">
+      <nav class="crumbs" aria-label="مسیر صفحه">
+        <a href="{% url 'home' %}">خانه</a> <span aria-hidden="true">/</span>
+        <a href="{% url 'announcements' %}">فراخوان‌ها</a>
+      </nav>
+      <p class="eyebrow">
+        <time datetime="{{ item.published_at|date:'c' }}">{{ item.published_at|jdate }}</time>
+        {% if item.deadline %}
+          <span aria-hidden="true">·</span>
+          مهلت: <time datetime="{{ item.deadline|date:'Y-m-d' }}">{{ item.deadline|jdate }}</time>
+        {% endif %}
+      </p>
+      <h1>{{ item.title }}</h1>
+      {% if item.summary %}<p class="lead">{{ item.summary }}</p>{% endif %}
+    </div>
+  </header>
 
-<section>
-  <div class="container narrow">
+  <div class="container narrow block">
     <div class="prose">{{ item.body|linebreaks }}</div>
     <p class="more"><a href="{% url 'contact' %}">برای شرکت در این فراخوان با ما تماس بگیرید ←</a></p>
   </div>
-</section>
+</article>
 {% endblock %}

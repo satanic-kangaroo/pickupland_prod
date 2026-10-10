@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+{% load core_tags %}
+
+{% block title %}طراحی تراشه · فراخوان جذب طراح مدار مجتمع · پیک آپ لند{% endblock %}
+{% block description %}فراخوان جذب طراح مدار مجتمع (آنالوگ، دیجیتال و RF) برای تیم تحقیق و توسعه‌ی پیک آپ لند.{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">فراخوان جذب طراح تراشه</p>
+    <h1>مهندسان طراح مدار مجتمع را به تیم ما بپیوندید</h1>
+    <p class="lead">مرکز نوآوری پیک آپ به‌عنوان کارگزار توسعه‌ی نوآوری در حوزه‌ی هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم، از نخبگان و پژوهشگران دعوت به همکاری می‌کند. ما دنبال افرادی هستیم که با تکیه بر دانش عمیق و تجربه‌ی عملی، پروژه‌های تحقیق و توسعه را پیش ببرند.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="container">
+    <header class="block-head">
+      <p class="eyebrow">موقعیت‌های باز</p>
+      <h2>حوزه‌های طراحی</h2>
+    </header>
+    <div class="job-grid">
+      {% for job in jobs %}
+        <article class="job">
+          <span class="job-track">{{ job.track }}</span>
+          <h3>{{ job.title }}</h3>
+          <p>{{ job.description }}</p>
+        </article>
+      {% empty %}
+        <p class="muted">در حال حاضر موقعیت بازی ثبت نشده است.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if jobs %}
+<section class="block block-alt">
+  <div class="container split">
+    <header class="block-head sticky">
+      <p class="eyebrow">شرایط</p>
+      <h2>آنچه از شما انتظار داریم</h2>
+    </header>
+    <ul class="check check-lg">
+      {% with first=jobs.0 %}
+        {% for req in first.requirements_list %}<li>{{ req }}</li>{% endfor %}
+      {% endwith %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+
+<section class="cta">
+  <div class="container cta-inner">
+    <div>
+      <h2>آماده‌ی همکاری هستید؟</h2>
+      <p>رزومه و توضیح کوتاهی از تجربه‌ی Tape-out یا پروژه‌های طراحی خود را با ما در میان بگذارید.</p>
+    </div>
+    <a class="btn btn-inverse" href="{% url 'contact' %}?topic=hiring">ارسال رزومه</a>
+  </div>
+</section>
+{% endblock %}

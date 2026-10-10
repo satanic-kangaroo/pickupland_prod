@@ -1,7 +1,8 @@
 {% extends "core/base.html" %}
 {% load core_tags %}
 
-{% block title %}فراخوان‌ها · پیک آپ لند{% endblock %}
+{% block title %}فراخوان‌ها و اخبار · پیک آپ لند{% endblock %}
+{% block description %}فراخوان‌ها، دوره‌ها و اخبار مگا شبکه‌ی پیک آپ لند.{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -11,20 +12,38 @@
   </div>
 </section>
 
-<section>
+<section class="block">
   <div class="container">
-    {% for item in announcements %}
+    {% for item in page_obj %}
       <a class="ann" href="{{ item.get_absolute_url }}">
-        <span class="ann-date">{{ item.published_at|jdate }}</span>
-        <span class="ann-body">
+        <time class="ann-date" datetime="{{ item.published_at|date:'c' }}">{{ item.published_at|jdate }}</time>
+        <div class="ann-body">
           <h3>{{ item.title }}</h3>
           {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
-        </span>
-        {% if item.deadline %}<span class="ann-deadline">مهلت: {{ item.deadline|jdate }}</span>{% endif %}
+        </div>
+        {% if item.deadline %}
+          <span class="ann-deadline">مهلت: <time datetime="{{ item.deadline|date:'Y-m-d' }}">{{ item.deadline|jdate }}</time></span>
+        {% endif %}
       </a>
     {% empty %}
       <p class="muted">فعلاً فراخوانی منتشر نشده است.</p>
     {% endfor %}
+
+    {% if page_obj.has_other_pages %}
+      <nav class="pager" aria-label="صفحه‌بندی فراخوان‌ها">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}" rel="prev">← صفحه‌ی قبل</a>
+        {% else %}
+          <span class="disabled" aria-disabled="true">← صفحه‌ی قبل</span>
+        {% endif %}
+        <span class="pager-status">صفحه‌ی {{ page_obj.number|fa_num }} از {{ page_obj.paginator.num_pages|fa_num }}</span>
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}" rel="next">صفحه‌ی بعد →</a>
+        {% else %}
+          <span class="disabled" aria-disabled="true">صفحه‌ی بعد →</span>
+        {% endif %}
+      </nav>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

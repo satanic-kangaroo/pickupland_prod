@@ -2,14 +2,16 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}پیک آپ لند · مگا شبکه‌ی نوآوری{% endblock %}</title>
-  <meta name="description" content="{% block description %}مگا شبکه‌ی نوآوری پیک آپ لند برای هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم{% endblock %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}پیک آپ لند · مگا شبکه‌ی توسعه‌ی نوآوری{% endblock %}</title>
+  <meta name="description" content="{% block description %}پیک آپ لند؛ مگا شبکه‌ی توسعه‌ی نوآوری صنعتی برای هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم، در منطقه‌ی نوآوری بین‌المللی ایران، پردیس{% endblock %}">
   <link rel="canonical" href="{{ site_url }}{{ request.path }}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="پیک آپ لند">
   <meta property="og:locale" content="fa_IR">
   <meta property="og:title" content="{% block og_title %}پیک آپ لند{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}مگا شبکه‌ی توسعه‌ی نوآوری؛ از ایده تا تراشه و بازار{% endblock %}">
+  <meta property="og:url" content="{{ site_url }}{{ request.path }}">
   <meta name="theme-color" content="{{ theme_vars.bg }}">
   <link rel="icon" href="{% static 'core/img/favicon.svg' %}" type="image/svg+xml">
   <script>document.documentElement.classList.add('js');</script>
@@ -26,20 +28,27 @@
 <body data-theme="{{ theme_name }}">
   <a class="skip-link" href="#content">رفتن به محتوا</a>
 
-  <header class="site-header">
+  <header class="site-header" id="top">
     <div class="container bar">
       <a class="brand" href="{% url 'home' %}" aria-label="صفحه‌ی اصلی پیک آپ لند">
-        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 1.5v3.5M15 1.5v3.5M9 19v3.5M15 19v3.5M1.5 9H5M1.5 15H5M19 9h3.5M19 15h3.5"/></svg>
-        <span>پیک آپ <b>لند</b></span>
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect class="mark-core" x="9" y="9" width="14" height="14" rx="2"/>
+          <path d="M12 3v6M20 3v6M12 23v6M20 23v6M3 12h6M3 20h6M23 12h6M23 20h6"/>
+        </svg>
+        <span class="brand-text">پیک آپ <b>لند</b></span>
       </a>
+
       <button class="menu-btn" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="باز کردن منو">
-        <span></span><span></span>
+        <span></span><span></span><span></span>
       </button>
+
       <nav id="site-nav" class="site-nav" aria-label="منوی اصلی">
-        <a class="{% if request.resolver_match.url_name == 'services' %}is-current{% endif %}" href="{% url 'services' %}">خدمات</a>
-        <a class="{% if request.resolver_match.url_name == 'about' %}is-current{% endif %}" href="{% url 'about' %}">درباره‌ی ما</a>
-        <a class="{% if 'announcement' in request.resolver_match.url_name %}is-current{% endif %}" href="{% url 'announcements' %}">فراخوان‌ها</a>
-        <a class="btn btn-small" href="{% url 'contact' %}">تماس و عضویت</a>
+        <a{% if request.resolver_match.url_name == 'services' %} class="is-current" aria-current="page"{% endif %} href="{% url 'services' %}">خدمات</a>
+        <a{% if request.resolver_match.url_name == 'academy' %} class="is-current" aria-current="page"{% endif %} href="{% url 'academy' %}">آکادمی</a>
+        <a{% if request.resolver_match.url_name == 'membership' %} class="is-current" aria-current="page"{% endif %} href="{% url 'membership' %}">عضویت</a>
+        <a{% if request.resolver_match.url_name == 'hiring' %} class="is-current" aria-current="page"{% endif %} href="{% url 'hiring' %}">طراحی تراشه</a>
+        <a{% if request.resolver_match.url_name == 'about' %} class="is-current" aria-current="page"{% endif %} href="{% url 'about' %}">درباره‌ی ما</a>
+        <a class="btn btn-small" href="{% url 'contact' %}">تماس با ما</a>
       </nav>
     </div>
   </header>
@@ -56,24 +65,35 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container foot">
-      <div>
-        <div class="brand">پیک آپ <b>لند</b></div>
-        <p class="muted">مگا شبکه‌ی نوآوری برای هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم.</p>
+    <div class="container foot-top">
+      <div class="foot-col foot-about">
+        <p class="foot-lead">ایده را از آزمایشگاه تا بازار همراهی می‌کنیم.</p>
+        <p class="muted">مگا شبکه‌ی توسعه‌ی نوآوری صنعتی برای هوش مصنوعی، میکروالکترونیک، فوتونیک و کوانتوم.</p>
       </div>
-      <nav class="foot-links" aria-label="پیوندهای پاورقی">
-        <a href="{% url 'services' %}">خدمات</a>
-        <a href="{% url 'about' %}">درباره‌ی ما</a>
-        <a href="{% url 'announcements' %}">فراخوان‌ها</a>
-        <a href="{% url 'contact' %}">تماس با ما</a>
+      <nav class="foot-col" aria-label="بخش‌های سایت">
+        <h2 class="foot-title">سایت</h2>
+        <ul class="plain">
+          <li><a href="{% url 'services' %}">خدمات</a></li>
+          <li><a href="{% url 'academy' %}">آکادمی</a></li>
+          <li><a href="{% url 'membership' %}">عضویت در حلقه</a></li>
+          <li><a href="{% url 'hiring' %}">طراحی تراشه</a></li>
+          <li><a href="{% url 'announcements' %}">فراخوان‌ها و اخبار</a></li>
+          <li><a href="{% url 'about' %}">درباره‌ی ما</a></li>
+        </ul>
       </nav>
-      <address class="foot-contact">
-        <div>{{ site.address }}</div>
-        <div dir="ltr">{{ site.email }}</div>
-        <div>ساعت کاری: {{ site.hours }}</div>
+      <address class="foot-col foot-contact">
+        <h2 class="foot-title">تماس</h2>
+        <p>{{ site.address }}</p>
+        <p><a dir="ltr" href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+        <p>ساعت کاری دفتر: {{ site.hours }}</p>
+        <p><a class="more-link" href="{% url 'contact' %}">ارسال پیام ←</a></p>
       </address>
     </div>
-    <div class="container copyright">© {% now "Y" %} پیک آپ لند</div>
+    <div class="foot-wordmark" aria-hidden="true">پیک آپ لند</div>
+    <div class="container copyright">
+      <span>© {% now "Y" %} پیک آپ لند</span>
+      <a href="#top">بازگشت به بالا ↑</a>
+    </div>
   </footer>
 
   <script src="{% static 'core/js/main.js' %}" defer></script>

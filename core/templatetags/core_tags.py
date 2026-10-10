@@ -24,6 +24,8 @@ ICONS = {
                '<path d="M12 7v4M12 11l-5 6M12 11l5 6"/>',
     "consult": '<path d="M4 5h16v11H9l-5 4z"/>',
     "finance": '<path d="M3 20h18"/><path d="M6 16V10M12 16V6M18 16v-4"/>',
+    "market": '<path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/>',
+    "academy": '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/>',
     "default": '<circle cx="12" cy="12" r="8"/>',
 }
 
@@ -55,3 +57,13 @@ def jdate(value, fmt="%Y/%m/%d"):
     else:
         jalali = jdatetime.date.fromgregorian(date=value)
     return jalali.strftime(fmt).translate(FA_DIGITS)
+
+
+@register.filter
+def toman_millions(value):
+    """۲۰۰۰۰۰۰۰ را به «۲۰ میلیون» تبدیل می‌کند."""
+    try:
+        amount = int(value) // 1_000_000
+    except (TypeError, ValueError):
+        return ""
+    return str(amount).translate(FA_DIGITS)

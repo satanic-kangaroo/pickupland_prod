@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "django.contrib.humanize",
     "core",
 ]
 
@@ -66,20 +67,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-if env("POSTGRES_HOST"):
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": env("POSTGRES_DB", "pickupland"),
-            "USER": env("POSTGRES_USER", "pickupland"),
-            "PASSWORD": env("POSTGRES_PASSWORD", ""),
-            "HOST": env("POSTGRES_HOST"),
-            "PORT": env("POSTGRES_PORT", "5432"),
-            "CONN_MAX_AGE": 60,
-        }
+SQLITE_PATH = Path(env("SQLITE_PATH", str(BASE_DIR / "data" / "db.sqlite3")))
+SQLITE_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": SQLITE_PATH,
+        "OPTIONS": {"timeout": 20},
     }
-else:
-    DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
+}
 
 LANGUAGE_CODE = "fa"
 TIME_ZONE = "Asia/Tehran"
@@ -126,7 +123,7 @@ LOGGING = {
 }
 
 # ---- تم و اطلاعات تماس ----
-PICKUP_THEME = env("PICKUP_THEME", "blueprint")
+PICKUP_THEME = env("PICKUP_THEME", "clean_room")
 
 SITE_CONTACT = {
     "name": "پیک آپ لند",
